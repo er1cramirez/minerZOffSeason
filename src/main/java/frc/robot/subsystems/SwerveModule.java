@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.REVLibError;
 import com.revrobotics.CANSparkBase.ControlType;
@@ -39,7 +38,7 @@ public class SwerveModule {
     private Rotation2d angleOffset;
 
     private CANSparkMax angleMotor;
-    private CANSparkFlex driveMotor;
+    private CANSparkMax driveMotor;
 
     private RelativeEncoder driveEncoder;
     private RelativeEncoder integratedAngleEncoder;
@@ -76,7 +75,7 @@ public class SwerveModule {
         configAngleMotor();
 
         /* Drive Motor Config */
-        driveMotor = new CANSparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
+        driveMotor = new CANSparkMax(moduleConstants.driveMotorID, MotorType.kBrushless);
         driveEncoder = driveMotor.getEncoder();
         driveController = driveMotor.getPIDController();
         configDriveMotor();
