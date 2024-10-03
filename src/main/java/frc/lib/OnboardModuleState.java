@@ -4,44 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class OnboardModuleState {
-  //modified modulo function that actually works properly with negative numbers.  e.g.  -8 % 6 == -2  but fixedMod(-8,6) = 4
-  public static double fixedMod(double a, double b){
-    double bad = a % b;
-    return bad + (bad < 0? b: 0);
-  }
-  public static double closestAngle(double currentValue, double targetValue){
-    return currentValue + Math.IEEEremainder(targetValue - currentValue, 360);
-  }
-  //for a given target angle, find the closest equivalent angle to the module's current direction
-  //custom optimize function because built-in doesn't work for some reason
-  //see https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html for more info
-  public static SwerveModuleState smolOptimize(SwerveModuleState desiredState, Rotation2d currentAngle){
-    //the module's current direction
-    double current = currentAngle.getDegrees();
-    //the direction you want to drive in
-    double target = desiredState.angle.getDegrees();
 
-    //find the direction that points you in the target direction with the least angle change
-    double error = closestAngle(current, target) - current;
-    //sometimes we can reverse the drive motor to avoid turning 180 degress.
-    //for example, if you were pointing 0 degrees straight ahead, and you suddenly wanted to go 175 degrees counterclockwise(almost backwards)
-    //you could just turn 5 degrees clockwise and drive the motor backwards -- and reach your target angle much faster
-
-    int direction = 1;
-    if(error > 90){
-      error -= 180;
-      direction = -1;
-    }
-    if(error < -90){
-      error += 180;
-      direction = -1;
-    }
-
-    
-
-    double speed = desiredState.speedMetersPerSecond * direction;
-    return new SwerveModuleState(speed,Rotation2d.fromDegrees(current + error));
-  }
   /**
    * Minimize the change in heading the desired swerve module state would require by potentially
    * reversing the direction the wheel spins. Customized from WPILib's version to include placing in
