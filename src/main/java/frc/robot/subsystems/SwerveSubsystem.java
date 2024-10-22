@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class SwerveSubsystem extends SubsystemBase {
   private final AHRS gyro;
@@ -111,6 +112,20 @@ public class SwerveSubsystem extends SubsystemBase {
     swerveOdometry.resetPosition(getYaw(), getPositions(), pose);
   }
 
+  public void setHeading(double deg) {
+    gyro.reset();
+    gyro.setAngleAdjustment(deg);
+  }
+
+  public void zeroHeading() {
+    setHeading(0);
+  }
+  
+  public void onXButton() {
+    zeroHeading();
+    resetOdometry(new Pose2d());
+    zeroHeading();
+  }
   public void setWheelsToX() {
     setModuleStates(new SwerveModuleState[] {
       // front left

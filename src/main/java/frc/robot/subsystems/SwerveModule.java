@@ -89,7 +89,7 @@ public class SwerveModule {
         // REV supports this now so dont have to worry with rev, but need some funky configs i dont want to do
         //have to be sad with falcons but thats what you get for giving money to Tony
         desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-        
+        desiredState.speedMetersPerSecond *= desiredState.angle.minus(getState().angle).getCos();
         setAngle(desiredState);
         setSpeed(desiredState, isOpenLoop);
     }
@@ -129,7 +129,7 @@ public class SwerveModule {
       }
     
     public Rotation2d getCanCoder(){
-        return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition().getValue());
+        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
     
     private void configAngleEncoder(){        

@@ -36,10 +36,12 @@ public final class Constants {
     public static final double driveGearRatio = (6.75 / 1.0); 
     public static final double angleGearRatio = ((150/7) / 1.0);
     
-    public static final double frontLeftOffset = -0.27099609375;//0.2099609375; //1
-    public static final double backLeftOffset = 0.28515625;//0.13232421875; //3
-    public static final double frontRightOffset = -0.220947265625;//360.0 - 0.328369140625; //0
-    public static final double backRightOffset = 0.36474609375;//360.0 + 0.05126953125; //2
+    public static final double frontRightOffset = 0; //0
+    public static final double frontLeftOffset = 0;//1
+    public static final double backRightOffset = 0; //2
+    public static final double backLeftOffset = 0; //3
+    
+    
 
     public static final SwerveDriveKinematics swerveKinematics =
     new SwerveDriveKinematics(

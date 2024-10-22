@@ -71,7 +71,7 @@ public class RobotContainer {
  
   private void configureBindings() {
     bButton.onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
-    xButton.onTrue(new InstantCommand(() -> m_SwerveSubsystem.setWheelsToX()));
+    xButton.onTrue(new InstantCommand(() -> m_SwerveSubsystem.onXButton()));
    
   }
 
