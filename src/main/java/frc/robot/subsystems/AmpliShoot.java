@@ -11,7 +11,10 @@ public class AmpliShoot extends SubsystemBase {
     private final CANSparkMax lanzador_U_Sup = new CANSparkMax(10,MotorType.kBrushless);
     private final CANSparkMax lanzador_D_Sup = new CANSparkMax(9,MotorType.kBrushless);
     // private final WPI_VictorSPX intake_uno = new WPI_VictorSPX(11);
-    // private final WPI_VictorSPX intake_dos = new WPI_VictorSPX(12);
+    // private final WPI_VictorSPX intake_dos = new WPI_VictorSPX(12);                  
+
+
+    
     public AmpliShoot() {
     }
     @Override
