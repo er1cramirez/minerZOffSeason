@@ -20,7 +20,7 @@ public class ShooterSubsystem {
     private RelativeEncoder upShooterEncoder;
     private CANSparkMax downShooterMotor;
     private RelativeEncoder downShooterEncoder;
-    private final WPI_VictorSPX feederMotor = new WPI_VictorSPX(Constants.ShooterConstants.feederMotorID);
+    // private final WPI_VictorSPX feederMotor = new WPI_VictorSPX(Constants.ShooterConstants.feederMotorID);
 
     private final SparkPIDController upShooterController;
     private final SparkPIDController downShooterController;
@@ -30,8 +30,8 @@ public class ShooterSubsystem {
             Constants.SwerveConstants.driveKS, Constants.SwerveConstants.driveKV, Constants.SwerveConstants.driveKA);
 
     public ShooterSubsystem() {
-        upShooterMotor = new CANSparkMax(Constants.ShooterConstants.upShooterMotorID, MotorType.kBrushless);
-        downShooterMotor = new CANSparkMax(Constants.ShooterConstants.downShooterMotorID, MotorType.kBrushless);
+        upShooterMotor = new CANSparkMax(9, MotorType.kBrushless);
+        downShooterMotor = new CANSparkMax(10, MotorType.kBrushless);
 
         upShooterEncoder = upShooterMotor.getEncoder();
         downShooterEncoder = downShooterMotor.getEncoder();

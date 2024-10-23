@@ -78,16 +78,12 @@ public class SwerveSubsystem extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.SwerveConstants.maxSpeed);
     return states;
   }
-
-
   public void runMoudles(SwerveModuleState[] states, boolean isOpenLoop) {
     for (SwerveModule mod : mSwerveMods) {
     mod.setDesiredState(states[mod.moduleNumber], isOpenLoop);
     }
   }
-
-  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop)
-  {
+  public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     ChassisSpeeds chassisSpeeds = CalcChassissSpeed(translation, rotation, fieldRelative);
     SwerveModuleState[] states = ModuleSpeedsToSates(chassisSpeeds);
     runMoudles(states, isOpenLoop);
@@ -102,12 +98,9 @@ public class SwerveSubsystem extends SubsystemBase {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
   }
-
-
   public Pose2d getPose() {
     return swerveOdometry.getPoseMeters();
   }
-
   public void resetOdometry(Pose2d pose) {
     swerveOdometry.resetPosition(getYaw(), getPositions(), pose);
   }
@@ -125,6 +118,7 @@ public class SwerveSubsystem extends SubsystemBase {
     zeroHeading();
     resetOdometry(new Pose2d());
     zeroHeading();
+    System.out.println("X Button Pressed");
     for (SwerveModule mod : mSwerveMods) {
       mod.resetToAbsolute();
     }
@@ -142,7 +136,6 @@ public class SwerveSubsystem extends SubsystemBase {
     });
   }
 
-
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     for (SwerveModule mod : mSwerveMods) {
@@ -158,8 +151,6 @@ public class SwerveSubsystem extends SubsystemBase {
     }
     return positions;
 }
-
-
   public void zeroGyro() {
     gyro.zeroYaw();
   }
@@ -204,7 +195,6 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic() {
         swerveOdometry.update(getYaw(), getPositions());
     field.setRobotPose(getPose());
-
     SmartDashboard.putNumber("gyro Roll",  gyro.getPitch());
 
     for (SwerveModule mod : mSwerveMods) {
