@@ -122,7 +122,7 @@ public class SwerveModule {
 
 
 
-    private void resetToAbsolute() {
+    public void resetToAbsolute() {
         double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
         integratedAngleEncoder.setPosition(absolutePosition); //may need to change 
 

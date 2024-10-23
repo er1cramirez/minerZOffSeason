@@ -7,7 +7,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -26,30 +26,20 @@ import edu.wpi.first.wpilibj.XboxController;
 
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_XboxController = new XboxController(0);
-  //private final CommandJoystick m_JoystickL = new CommandJoystick(0);
-  //private final CommandJoystick m_JoystickR = new CommandJoystick(1);
+  private final XboxController driveController = new XboxController(0);
+// private final CommandXboxController driverXbox = new CommandXboxController(0);
+  private final CommandXboxController robotController = new CommandXboxController(1);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
   
-  private final Trigger robotCentric = new JoystickButton(m_XboxController,XboxController.Button.kY.value);
-  private final Trigger xButton = new JoystickButton(m_XboxController, XboxController.Button.kX.value);
-  private final Trigger bButton = new JoystickButton(m_XboxController, XboxController.Button.kB.value);
-
-
-
-  /*private final int translationAxis = Joystick.AxisType.kY.value; //left flight stick
-  private final int strafeAxis = Joystick.AxisType.kX.value; //left flight stick
-  private final int rotationAxis = Joystick.AxisType.kX.value; //right flight stick*/
-
+  private final Trigger robotCentric = new JoystickButton(driveController,XboxController.Button.kY.value);
+  private final Trigger xButton = new JoystickButton(driveController, XboxController.Button.kX.value);
+  private final Trigger bButton = new JoystickButton(driveController, XboxController.Button.kB.value);
   /* Subsystems */
-  private final SwerveSubsystem m_SwerveSubsystem = new SwerveSubsystem();
+  private final SwerveSubsystem swerveDrive = new SwerveSubsystem();
 
 
 
@@ -57,21 +47,20 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_SwerveSubsystem.setDefaultCommand(
+    swerveDrive.setDefaultCommand(
       new TeleopSwerve(
-          m_SwerveSubsystem,
-          () -> -m_XboxController.getRawAxis(translationAxis),
-          () -> m_XboxController.getRawAxis(strafeAxis),
-          () -> -m_XboxController.getRawAxis(rotationAxis),
+          swerveDrive,
+          () -> -driveController.getRawAxis(translationAxis),
+          () -> driveController.getRawAxis(strafeAxis),
+          () -> -driveController.getRawAxis(rotationAxis),
           () -> robotCentric.getAsBoolean()));
-
     configureBindings();
   }
 
  
   private void configureBindings() {
-    bButton.onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
-    xButton.onTrue(new InstantCommand(() -> m_SwerveSubsystem.onXButton()));
+    bButton.onTrue(new InstantCommand(() -> swerveDrive.zeroGyro()));
+    xButton.onTrue(new InstantCommand(() -> swerveDrive.onXButton()));
    
   }
 

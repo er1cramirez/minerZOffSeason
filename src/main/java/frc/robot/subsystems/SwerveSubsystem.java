@@ -125,6 +125,9 @@ public class SwerveSubsystem extends SubsystemBase {
     zeroHeading();
     resetOdometry(new Pose2d());
     zeroHeading();
+    for (SwerveModule mod : mSwerveMods) {
+      mod.resetToAbsolute();
+    }
   }
   public void setWheelsToX() {
     setModuleStates(new SwerveModuleState[] {
