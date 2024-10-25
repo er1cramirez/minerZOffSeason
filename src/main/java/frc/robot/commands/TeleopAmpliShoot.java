@@ -18,15 +18,17 @@ public class TeleopAmpliShoot extends Command{
     }
     @Override
     public void initialize() {
-        this.ampliStatus = 0;
-        this.incio_ampli = Timer.getFPGATimestamp();
+        
 
     }
     @Override
     public void execute() {
         if(shoot.getAsBoolean()){
-            ampliShoot();
+            this.ampliStatus = 0;
+            this.incio_ampli = Timer.getFPGATimestamp();
+            
         }
+        ampliShoot();
     }
     public void ampliShoot() {
         if(ampliStatus != 10){

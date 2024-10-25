@@ -85,9 +85,6 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-        // Custom optimize command, since default WPILib optimize assumes continuous controller which
-        // REV supports this now so dont have to worry with rev, but need some funky configs i dont want to do
-        //have to be sad with falcons but thats what you get for giving money to Tony
         desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
         desiredState.speedMetersPerSecond *= desiredState.angle.minus(getState().angle).getCos();
         setAngle(desiredState);
