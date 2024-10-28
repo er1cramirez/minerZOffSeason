@@ -24,6 +24,7 @@ public class TeleopAmpliShoot extends Command{
     @Override
     public void execute() {
         if(shoot.getAsBoolean()){
+            System.out.println("Shoot activated");
             this.ampliStatus = 0;
             this.incio_ampli = Timer.getFPGATimestamp();
             
@@ -58,6 +59,9 @@ public class TeleopAmpliShoot extends Command{
     }
     @Override
     public void end(boolean interrupted) {
+        ampliShoot.runShooter(0);
+        ampliShoot.feederRun(0);
+        ampliStatus = 10;
     }
     @Override
     public boolean isFinished() {
