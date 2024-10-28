@@ -62,6 +62,7 @@ public class TeleopAmpliShoot extends Command{
         ampliShoot.runShooter(0);
         ampliShoot.feederRun(0);
         ampliStatus = 10;
+        System.out.println("Shoot interrupted");
     }
     @Override
     public boolean isFinished() {
