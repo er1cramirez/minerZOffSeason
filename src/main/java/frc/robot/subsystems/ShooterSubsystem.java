@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.CANSparkMaxUtil;
 import frc.lib.CANSparkMaxUtil.Usage;
@@ -15,7 +16,7 @@ import frc.lib.CANSparkMaxUtil.Usage;
 // import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-public class ShooterSubsystem {
+public class ShooterSubsystem extends SubsystemBase{
     private CANSparkMax upShooterMotor;
     private RelativeEncoder upShooterEncoder;
     private CANSparkMax downShooterMotor;
@@ -50,12 +51,12 @@ public class ShooterSubsystem {
     public void setSpeed(double speed) {
         upShooterController.setReference(
             speed,
-            ControlType.kVelocity,
+            ControlType.kDutyCycle,
             0,
             feedforward.calculate(speed));
         downShooterController.setReference(
             speed,
-            ControlType.kVelocity,
+            ControlType.kDutyCycle,
             0,
             feedforward.calculate(speed));
     }

@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.TeleopIntake;
+import frc.robot.commands.TeleopShooter;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TeleopAmpliShoot;
 import frc.robot.subsystems.AmpliShoot;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveDrive = new SwerveSubsystem();
   private final Intake intake = new Intake();
   private final AmpliShoot shooter = new AmpliShoot();
+  private final ShooterSubsystem PIDcontrolledShooter = new ShooterSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands.*/
   public RobotContainer() {
     swerveDrive.setDefaultCommand(
@@ -48,6 +51,9 @@ public class RobotContainer {
       new TeleopIntake(intake, () -> robotController.getRawAxis(XboxController.Axis.kLeftY.value)));
     shooter.setDefaultCommand(
       new TeleopAmpliShoot(shooter, () -> shootButton.getAsBoolean()));
+
+    PIDcontrolledShooter.setDefaultCommand(
+      new TeleopShooter(PIDcontrolledShooter, () -> robotController.getRawAxis(XboxController.Axis.kRightY.value)));
     configureBindings();
   }
   private void configureBindings() {
