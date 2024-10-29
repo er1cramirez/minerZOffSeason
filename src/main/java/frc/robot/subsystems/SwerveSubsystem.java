@@ -47,7 +47,10 @@ public class SwerveSubsystem extends SubsystemBase {
       new SwerveModule(Constants.SwerveConstants.BackLeftMod.moudleId, Constants.SwerveConstants.BackLeftMod.constants) 
     };
     
-
+    // System.out.println("X Button Pressed");
+    // for (SwerveModule mod : mSwerveMods) {
+    //   mod.resetToAbsolute();
+    // }
     swerveOdometry = new SwerveDriveOdometry(Constants.SwerveConstants.swerveKinematics, getYaw(), getPositions());
 
     //puts out the field
@@ -81,6 +84,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void runMoudles(SwerveModuleState[] states, boolean isOpenLoop) {
     for (SwerveModule mod : mSwerveMods) {
     mod.setDesiredState(states[mod.moduleNumber], isOpenLoop);
+    // System.out.println(states[mod.moduleNumber]);
     }
   }
   public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -96,6 +100,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+      System.out.println(desiredStates[mod.moduleNumber]);
     }
   }
   public Pose2d getPose() {
@@ -106,8 +111,9 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void setHeading(double deg) {
-    gyro.reset();
-    gyro.setAngleAdjustment(deg);
+    double error = deg - gyro.getAngle();
+    double new_adjustment = gyro.getAngleAdjustment() + error;
+    gyro.setAngleAdjustment(new_adjustment);
   }
 
   public void zeroHeading() {
@@ -124,16 +130,17 @@ public class SwerveSubsystem extends SubsystemBase {
     }
   }
   public void setWheelsToX() {
-    setModuleStates(new SwerveModuleState[] {
+    runMoudles(new SwerveModuleState[] {
       // front left
-      new SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
       // front right
-      new SwerveModuleState(0.0, Rotation2d.fromDegrees(-45.0)),
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
       // back left
-      new SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)),
       // back right
-      new SwerveModuleState(0.0, Rotation2d.fromDegrees(-135.0))
-    });
+      new SwerveModuleState(0.0, Rotation2d.fromDegrees(0))
+    },true);
+    System.out.println("WHEELS TO X");
   }
 
   public SwerveModuleState[] getStates() {
@@ -199,7 +206,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+          "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees()-mod.angleOffset.getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Integrated Angle", mod.getState().angle.getDegrees());
       SmartDashboard.putNumber(

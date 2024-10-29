@@ -36,10 +36,10 @@ public final class Constants {
     public static final double driveGearRatio = (6.75 / 1.0); 
     public static final double angleGearRatio = ((150/7) / 1.0);
     
-    public static final double frontRightOffset = 0; //0
-    public static final double frontLeftOffset = 0;//1
-    public static final double backRightOffset = 0; //2
-    public static final double backLeftOffset = 0; //3
+    public static final double frontRightOffset = 280.1953313; //0
+    public static final double frontLeftOffset = 261.38672;//1
+    public static final double backRightOffset = 127.79297; //2
+    public static final double backLeftOffset = 53.261719; //3
     
     
 

@@ -5,6 +5,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.CANSparkMaxUtil;
+import frc.lib.CANSparkMaxUtil.Usage;
+import frc.robot.Constants;
 
 public class AmpliShoot extends SubsystemBase {
     private final WPI_VictorSPX intake_Sup = new WPI_VictorSPX(13);
@@ -26,6 +29,23 @@ public class AmpliShoot extends SubsystemBase {
     }
     public void feederRun(double speed) {
         intake_Sup.set(speed);
+    }
+
+    public void harwareInit() {
+        lanzador_D_Sup.restoreFactoryDefaults();
+        lanzador_U_Sup.restoreFactoryDefaults();
+        //limits can bus usage
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(lanzador_D_Sup, Usage.kMinimal);
+        CANSparkMaxUtil.setCANSparkMaxBusUsage(lanzador_U_Sup, Usage.kMinimal);
+
+        lanzador_D_Sup.setIdleMode(Constants.SwerveConstants.angleNeutralMode);
+        lanzador_U_Sup.setIdleMode(Constants.SwerveConstants.angleNeutralMode);
+        lanzador_D_Sup.setSmartCurrentLimit(20);
+        lanzador_U_Sup.setSmartCurrentLimit(20);
+        lanzador_D_Sup.burnFlash();
+        lanzador_U_Sup.burnFlash();
+        intake_Sup.changeMotionControlFramePeriod(500);
+        // intake_Sup.burnFlash();
     }
     
 }

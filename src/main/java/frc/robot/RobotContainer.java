@@ -52,7 +52,7 @@ public class RobotContainer {
   }
   private void configureBindings() {
     bButton.onTrue(new InstantCommand(() -> swerveDrive.zeroGyro()));
-    xButton.onTrue(new InstantCommand(() -> swerveDrive.onXButton()));
+    xButton.onTrue(new InstantCommand(() -> swerveDrive.setWheelsToX()));
   }
   public Command getAutonomousCommand() {
     return null;

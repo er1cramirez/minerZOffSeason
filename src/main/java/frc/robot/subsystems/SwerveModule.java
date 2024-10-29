@@ -32,7 +32,7 @@ public class SwerveModule {
     public double m_angleKD;
     public double m_angleKFF;
     private Rotation2d lastAngle;
-    private Rotation2d angleOffset;
+    public Rotation2d angleOffset;
 
     private CANSparkMax angleMotor;
     private CANSparkMax driveMotor;
@@ -121,7 +121,11 @@ public class SwerveModule {
 
     public void resetToAbsolute() {
         double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
-        integratedAngleEncoder.setPosition(absolutePosition); //may need to change 
+        // Optimize the absolute position to be closest to the current position
+
+        SwerveModuleState desiredState = new SwerveModuleState(0.0, Rotation2d.fromDegrees(absolutePosition));
+        desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+        integratedAngleEncoder.setPosition(desiredState.angle.getDegrees()); //may need to change 
 
       }
     
@@ -160,6 +164,7 @@ public class SwerveModule {
         Timer.delay(1.0);
         //resets to the cancoder
         resetToAbsolute();
+        // setAngle(new SwerveModuleState(0.0, Rotation2d.fromDegrees(0)));
     }
 
     private void configDriveMotor(){    
