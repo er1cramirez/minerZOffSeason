@@ -37,7 +37,7 @@ public class RobotContainer {
   private final SwerveSubsystem swerveDrive = new SwerveSubsystem();
   private final Intake intake = new Intake();
   private final AmpliShoot shooter = new AmpliShoot();
-  private final ShooterSubsystem PIDcontrolledShooter = new ShooterSubsystem();
+  // private final ShooterSubsystem PIDcontrolledShooter = new ShooterSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands.*/
   public RobotContainer() {
     swerveDrive.setDefaultCommand(
@@ -52,8 +52,8 @@ public class RobotContainer {
     shooter.setDefaultCommand(
       new TeleopAmpliShoot(shooter, () -> shootButton.getAsBoolean()));
 
-    PIDcontrolledShooter.setDefaultCommand(
-      new TeleopShooter(PIDcontrolledShooter, () -> robotController.getRawAxis(XboxController.Axis.kRightY.value)));
+    // PIDcontrolledShooter.setDefaultCommand(
+    //   new TeleopShooter(PIDcontrolledShooter, () -> robotController.getRawAxis(XboxController.Axis.kRightY.value)));
     configureBindings();
   }
   private void configureBindings() {

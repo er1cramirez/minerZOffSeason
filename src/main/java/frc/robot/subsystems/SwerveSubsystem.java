@@ -100,7 +100,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
-      System.out.println(desiredStates[mod.moduleNumber]);
+      // System.out.println(desiredStates[mod.moduleNumber]);
     }
   }
   public Pose2d getPose() {
@@ -124,7 +124,7 @@ public class SwerveSubsystem extends SubsystemBase {
     zeroHeading();
     resetOdometry(new Pose2d());
     zeroHeading();
-    System.out.println("X Button Pressed");
+    // System.out.println("X Button Pressed");
     for (SwerveModule mod : mSwerveMods) {
       mod.resetToAbsolute();
     }
@@ -140,7 +140,7 @@ public class SwerveSubsystem extends SubsystemBase {
       // back right
       new SwerveModuleState(0.0, Rotation2d.fromDegrees(0))
     },true);
-    System.out.println("WHEELS TO X");
+    // System.out.println("WHEELS TO X");
   }
 
   public SwerveModuleState[] getStates() {
