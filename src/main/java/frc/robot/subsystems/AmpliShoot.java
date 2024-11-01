@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+// import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.CANSparkMaxUtil;
 import frc.lib.CANSparkMaxUtil.Usage;
-import frc.robot.Constants;
+// import frc.robot.Constants;
 
 public class AmpliShoot extends SubsystemBase {
     private final WPI_VictorSPX intake_Sup = new WPI_VictorSPX(13);
@@ -38,8 +40,8 @@ public class AmpliShoot extends SubsystemBase {
         CANSparkMaxUtil.setCANSparkMaxBusUsage(lanzador_D_Sup, Usage.kMinimal);
         CANSparkMaxUtil.setCANSparkMaxBusUsage(lanzador_U_Sup, Usage.kMinimal);
 
-        lanzador_D_Sup.setIdleMode(Constants.SwerveConstants.angleNeutralMode);
-        lanzador_U_Sup.setIdleMode(Constants.SwerveConstants.angleNeutralMode);
+        lanzador_D_Sup.setIdleMode(IdleMode.kCoast);
+        lanzador_U_Sup.setIdleMode(IdleMode.kCoast);
         lanzador_D_Sup.setSmartCurrentLimit(20);
         lanzador_U_Sup.setSmartCurrentLimit(20);
         lanzador_D_Sup.burnFlash();

@@ -16,6 +16,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 // import edu.wpi.first.networktables.NetworkTableInstance;
 // import edu.wpi.first.networktables.StructArrayPublisher;
+// import edu.wpi.first.networktables.NetworkTableInstance;
+// import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,14 +30,14 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
-
+  // private final StructArrayPublisher<SwerveModuleState> publisher;
   private Field2d field;
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() {
-    //instantiates new pigeon gyro, wipes it, and zeros it
+    // publisher = NetworkTableInstance.getDefault()
+    //   .getStructArrayTopic("/SwerveStates", SwerveModuleState.struct).publish();
     gyro = new AHRS(SPI.Port.kMXP);
-    // gyro.configFactoryDefault();
     zeroGyro();
     
     
@@ -169,6 +171,17 @@ public class SwerveSubsystem extends SubsystemBase {
         : Rotation2d.fromDegrees(gyro.getYaw());
   }
 
+  // Función para normalizar el ángulo a un rango de -180 a 180 grados
+  // private double normalizeAngle(double angle) {
+  //   while (angle > 180.0) {
+  //       angle -= 360.0;
+  //   }
+  //   while (angle < -180.0) {
+  //       angle += 360.0;
+  //   }
+  //   return angle;
+  // }
+
   public boolean AutoBalance(){
     double roll_error = gyro.getPitch();//the angle of the robot
     double balance_kp = -.005;//Variable muliplied by roll_error
@@ -202,7 +215,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void periodic() {
         swerveOdometry.update(getYaw(), getPositions());
     field.setRobotPose(getPose());
-    SmartDashboard.putNumber("gyro Roll",  gyro.getPitch());
+    SmartDashboard.putNumber("gyro Yaw",  getYaw().getDegrees());
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.TeleopIntake;
 import frc.robot.commands.TeleopShooter;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.autos.testAuto;
 import frc.robot.commands.TeleopAmpliShoot;
 import frc.robot.subsystems.AmpliShoot;
 import frc.robot.subsystems.Intake;
@@ -39,6 +40,8 @@ public class RobotContainer {
   private final AmpliShoot shooter = new AmpliShoot();
   // private final ShooterSubsystem PIDcontrolledShooter = new ShooterSubsystem();
   /** The container for the robot. Contains subsystems, OI devices, and commands.*/
+
+  Command autCommand;
   public RobotContainer() {
     swerveDrive.setDefaultCommand(
       new TeleopSwerve(
@@ -54,6 +57,7 @@ public class RobotContainer {
 
     // PIDcontrolledShooter.setDefaultCommand(
     //   new TeleopShooter(PIDcontrolledShooter, () -> robotController.getRawAxis(XboxController.Axis.kRightY.value)));
+    autCommand = new testAuto(swerveDrive);
     configureBindings();
   }
   private void configureBindings() {
@@ -61,6 +65,6 @@ public class RobotContainer {
     xButton.onTrue(new InstantCommand(() -> swerveDrive.setWheelsToX()));
   }
   public Command getAutonomousCommand() {
-    return null;
+    return autCommand;
   }
 }
