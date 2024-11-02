@@ -121,12 +121,12 @@ public class SwerveModule {
 
     public void resetToAbsolute() {
         double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
-        double angleError = absolutePosition - getAngle().getDegrees();
-        if (angleError > 180) {
-            absolutePosition -= 360;
-        } else if (angleError < -180) {
-            absolutePosition += 360;
-        }
+        // double angleError = absolutePosition - getAngle().getDegrees();
+        // if (angleError > 180) {
+        //     absolutePosition -= 360;
+        // } else if (angleError < -180) {
+        //     absolutePosition += 360;
+        // }
         // Optimize the absolute position to be closest to the current position
 
         // SwerveModuleState desiredState = new SwerveModuleState(0.0, Rotation2d.fromDegrees(absolutePosition));

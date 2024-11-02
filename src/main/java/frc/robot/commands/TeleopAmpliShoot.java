@@ -46,14 +46,14 @@ public class TeleopAmpliShoot extends Command{
                 if((Timer.getFPGATimestamp()- incio_ampli)> 1.5) ampliStatus = 3;
             }
             if(ampliStatus == 3){
-                ampliShoot.runShooter(0.7);
+                ampliShoot.runShooter(0.8);
                 ampliShoot.feederRun(0.5);
-                if((Timer.getFPGATimestamp()- incio_ampli)> 2) ampliStatus = 4;
+                if((Timer.getFPGATimestamp()- incio_ampli)> 2.2) ampliStatus = 4;
             }
             if(ampliStatus == 4){
                 ampliShoot.runShooter(0);
                 ampliShoot.feederRun(0);
-                if((Timer.getFPGATimestamp()- incio_ampli)> 2) ampliStatus = 10;
+                if((Timer.getFPGATimestamp()- incio_ampli)> 2.2) ampliStatus = 10;
             }
         }
     }
@@ -62,10 +62,11 @@ public class TeleopAmpliShoot extends Command{
         ampliShoot.runShooter(0);
         ampliShoot.feederRun(0);
         ampliStatus = 10;
-        System.out.println("Shoot interrupted");
+        // System.out.println("Shoot interrupted");
     }
     @Override
     public boolean isFinished() {
+        // if (ampliStatus == 10) return true;
         return false;
     }
 

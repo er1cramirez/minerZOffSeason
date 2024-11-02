@@ -13,11 +13,17 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
+// import frc.robot.commands.AutoAmpliShoot;
+import frc.robot.subsystems.AmpliShoot;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class testAuto extends SequentialCommandGroup{
-    public testAuto(SwerveSubsystem m_SwerveSubsystem) {
+    public testAuto(SwerveSubsystem m_SwerveSubsystem, AmpliShoot ampliShoot) {
     TrajectoryConfig config =
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -29,9 +35,9 @@ public class testAuto extends SequentialCommandGroup{
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these  interior waypoints
-            List.of(new Translation2d(0, 1)), 
+            List.of(new Translation2d(-0.5, 1)), 
             // End 1.5 meters straight ahead of where we started, facing forward
-            new Pose2d(0, 1.1, new Rotation2d(0)),
+            new Pose2d(-0.5, 1.1, new Rotation2d(0)),
             config);
 
     var thetaController =
@@ -52,9 +58,50 @@ public class testAuto extends SequentialCommandGroup{
             thetaController,
             m_SwerveSubsystem::setModuleStates,
             m_SwerveSubsystem);
+    // AutoAmpliShoot ampliShoot2 = new AutoAmpliShoot(ampliShoot);
+    // addSequential(new InstantCommand(() -> ampliShoot.runShooter(0.4)));
 
     addCommands(
+        // new WaitUntilCommand(new AutoAmpliShoot(ampliShoot)),
+        new InstantCommand(() -> ampliShoot.runShooter(0.4)),
+        new WaitCommand(0.5),
+        new InstantCommand(() -> ampliShoot.runShooter(0.6)),
+        new WaitCommand(0.8),
+        new InstantCommand(() -> ampliShoot.bothRun(0.9)),
+        new WaitCommand(0.1),
+        new InstantCommand(() -> ampliShoot.feederRun(1)),
+        new WaitCommand(1.2),
+        new InstantCommand(() -> ampliShoot.bothRun(0)),
+        // new WaitCommand(0.1),
+        // new InstantCommand(() -> ampliShoot.feederRun(0)),
+        new WaitCommand(1),
         new InstantCommand(() -> m_SwerveSubsystem.resetOdometry(outTrajectory.getInitialPose())),
         swerveControllerCommand);
     }
 }
+
+
+// if(ampliStatus != 10){
+//             if(ampliStatus == 0){
+//                 ampliShoot.runShooter(0.1);
+//                 if((Timer.getFPGATimestamp()- incio_ampli)> 0.5) ampliStatus = 1;
+//             }
+//             if(ampliStatus == 1){
+//                 ampliShoot.runShooter(0.3);
+//                 if((Timer.getFPGATimestamp()- incio_ampli)> 0.5) ampliStatus = 2;
+//             }
+//             if(ampliStatus == 2){
+//                 ampliShoot.runShooter(0.5);
+//                 if((Timer.getFPGATimestamp()- incio_ampli)> 1.5) ampliStatus = 3;
+//             }
+//             if(ampliStatus == 3){
+//                 ampliShoot.runShooter(0.7);
+//                 ampliShoot.feederRun(0.5);
+//                 if((Timer.getFPGATimestamp()- incio_ampli)> 2) ampliStatus = 4;
+//             }
+//             if(ampliStatus == 4){
+//                 ampliShoot.runShooter(0);
+//                 ampliShoot.feederRun(0);
+//                 if((Timer.getFPGATimestamp()- incio_ampli)> 2) ampliStatus = 10;
+//             }
+//         }

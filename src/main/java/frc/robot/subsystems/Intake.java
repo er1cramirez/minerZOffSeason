@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeRun(double speed) {
-        intake_Sup.set(speed);
+        intake_Sup.set(-speed);
         intake_uno.set(speed);
         intake_dos.set(speed);
     }

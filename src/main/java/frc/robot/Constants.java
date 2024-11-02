@@ -36,10 +36,10 @@ public final class Constants {
     public static final double driveGearRatio = (6.75 / 1.0); 
     public static final double angleGearRatio = ((150/7) / 1.0);
     
-    public static final double frontRightOffset = 280.1953313; //0
-    public static final double frontLeftOffset = 261.38672;//1
-    public static final double backRightOffset = 127.79297; //2
-    public static final double backLeftOffset = 53.261719; //3
+    public static final double frontRightOffset = 180 + 100.8984375; //0
+    public static final double frontLeftOffset = 263;//1
+    public static final double backRightOffset = 180 + 308.3203125; //2
+    public static final double backLeftOffset = 51.7; //3
     
     
 
@@ -79,8 +79,8 @@ public final class Constants {
     public static final double maxAngularVelocity = 1.5; //what are these units?
 
     /* Neutral Modes */ 
-    public static final IdleMode angleNeutralMode = IdleMode.kBrake; //change to break
-    public static final IdleMode driveNeutralMode = IdleMode.kBrake; //change to break
+    public static final IdleMode angleNeutralMode = IdleMode.kCoast; //change to break
+    public static final IdleMode driveNeutralMode = IdleMode.kCoast; //change to break
 
     /* Motor Inverts */
     public static final boolean driveInvert = false;
