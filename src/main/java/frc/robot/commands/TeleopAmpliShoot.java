@@ -4,16 +4,19 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AmpliShoot;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj.Timer;
 
 public class TeleopAmpliShoot extends Command{
     private AmpliShoot ampliShoot;
+    private Intake intake;
     private BooleanSupplier shoot;
     private int ampliStatus = 10;
     private double incio_ampli = 0;
-    public TeleopAmpliShoot(AmpliShoot ampliShoot, BooleanSupplier shoot) {
+    public TeleopAmpliShoot(AmpliShoot ampliShoot, Intake intake, BooleanSupplier shoot) {
         this.ampliShoot = ampliShoot;
-        addRequirements(ampliShoot);
+        this.intake = intake;
+        addRequirements(ampliShoot, intake);
         this.shoot = shoot; 
     }
     @Override
@@ -47,12 +50,12 @@ public class TeleopAmpliShoot extends Command{
             }
             if(ampliStatus == 3){
                 ampliShoot.runShooter(0.8);
-                ampliShoot.feederRun(0.5);
+                intake.feederRun(0.5);
                 if((Timer.getFPGATimestamp()- incio_ampli)> 2.2) ampliStatus = 4;
             }
             if(ampliStatus == 4){
                 ampliShoot.runShooter(0);
-                ampliShoot.feederRun(0);
+                intake.feederRun(0);
                 if((Timer.getFPGATimestamp()- incio_ampli)> 2.2) ampliStatus = 10;
             }
         }
@@ -60,7 +63,7 @@ public class TeleopAmpliShoot extends Command{
     @Override
     public void end(boolean interrupted) {
         ampliShoot.runShooter(0);
-        ampliShoot.feederRun(0);
+        intake.feederRun(0);
         ampliStatus = 10;
         // System.out.println("Shoot interrupted");
     }

@@ -20,4 +20,8 @@ public class Intake extends SubsystemBase {
         intake_uno.set(speed);
         intake_dos.set(speed);
     }
+
+    public void feederRun(double speed) {
+        intake_Sup.set(-speed);
+    }
 }

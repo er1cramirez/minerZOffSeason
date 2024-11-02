@@ -20,10 +20,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 // import frc.robot.commands.AutoAmpliShoot;
 import frc.robot.subsystems.AmpliShoot;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class testAuto extends SequentialCommandGroup{
-    public testAuto(SwerveSubsystem m_SwerveSubsystem, AmpliShoot ampliShoot) {
+    public testAuto(SwerveSubsystem m_SwerveSubsystem, AmpliShoot ampliShoot, Intake intake) {
     TrajectoryConfig config =
         new TrajectoryConfig(
                 Constants.AutoConstants.kMaxSpeedMetersPerSecond,
@@ -67,13 +68,13 @@ public class testAuto extends SequentialCommandGroup{
         new WaitCommand(0.5),
         new InstantCommand(() -> ampliShoot.runShooter(0.6)),
         new WaitCommand(0.8),
-        new InstantCommand(() -> ampliShoot.bothRun(0.9)),
+        new InstantCommand(() -> ampliShoot.runShooter(0.8)),
         new WaitCommand(0.1),
-        new InstantCommand(() -> ampliShoot.feederRun(1)),
+        new InstantCommand(() -> intake.feederRun(1)),
         new WaitCommand(1.2),
-        new InstantCommand(() -> ampliShoot.bothRun(0)),
-        // new WaitCommand(0.1),
-        // new InstantCommand(() -> ampliShoot.feederRun(0)),
+        new InstantCommand(() -> ampliShoot.runShooter(0)),
+        new WaitCommand(0.1),
+        new InstantCommand(() -> intake.feederRun(0)),
         new WaitCommand(1),
         new InstantCommand(() -> m_SwerveSubsystem.resetOdometry(outTrajectory.getInitialPose())),
         swerveControllerCommand);

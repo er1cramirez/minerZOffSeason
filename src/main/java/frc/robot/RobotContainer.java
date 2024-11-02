@@ -53,11 +53,11 @@ public class RobotContainer {
     intake.setDefaultCommand(
       new TeleopIntake(intake, () -> robotController.getRawAxis(XboxController.Axis.kLeftY.value)));
     shooter.setDefaultCommand(
-      new TeleopAmpliShoot(shooter, () -> shootButton.getAsBoolean()));
+      new TeleopAmpliShoot(shooter, intake, () -> shootButton.getAsBoolean()));
 
     // PIDcontrolledShooter.setDefaultCommand(
     //   new TeleopShooter(PIDcontrolledShooter, () -> robotController.getRawAxis(XboxController.Axis.kRightY.value)));
-    autCommand = new testAuto(swerveDrive, shooter);
+    autCommand = new testAuto(swerveDrive, shooter, intake);
     configureBindings();
   }
   private void configureBindings() {
